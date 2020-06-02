@@ -35,6 +35,8 @@ var testAlgo;
     algo.properties.push("name:presetSize|type:range|display:Size|values:1,40|write:setSize|read:getSize");
     algo.orientation = 0;
     algo.properties.push("name:orientation|type:list|display:Orientation|values:Horizontal,Vertical,Radial|write:setOrientation|read:getOrientation");
+    algo.interpolationMode = 0;
+    algo.properties.push("name:interpolationMode|type:list|display:Interpolation Mode|values:Interpolate,No Interpolate|write:setInterpolationMode|read:getInterpolationMode");
 
     var util = new Object;
     util.initialized = false;
@@ -93,6 +95,19 @@ var testAlgo;
       else { return "Horizontal"; }
     };
 
+    algo.setInterpolationMode = function(_interpolationMode)
+    {
+      if (_interpolationMode === "No Interpolate") { algo.interpolationMode = 1; }
+      else { algo.interpolationMode = 0; }
+      util.initialize();
+    };
+
+    algo.getInterpolationMode = function()
+    {
+      if (algo.interpolationMode === 1) { return "No Interpolate"; }
+      else { return "Interpolate"; }
+    };
+
     util.initialize = function()
     {
       // calculate the gradient for the selected preset
@@ -120,11 +135,15 @@ var testAlgo;
 
         for (var s = 1; s < algo.presetSize; s++)
         {
-          var gradR = Math.floor(sr + (stepR * s)) & 0x00FF;
-          var gradG = Math.floor(sg + (stepG * s)) & 0x00FF;
-          var gradB = Math.floor(sb + (stepB * s)) & 0x00FF;
-          var gradRGB = (gradR << 16) + (gradG << 8) + gradB;
-          util.gradientData[gradIdx++] = gradRGB;
+          if (algo.interpolationMode === 0) {
+            var gradR = Math.floor(sr + (stepR * s)) & 0x00FF;
+            var gradG = Math.floor(sg + (stepG * s)) & 0x00FF;
+            var gradB = Math.floor(sb + (stepB * s)) & 0x00FF;
+            var gradRGB = (gradR << 16) + (gradG << 8) + gradB;
+            util.gradientData[gradIdx++] = gradRGB;
+          } else {
+            util.gradientData[gradIdx++] = sColor;
+          }
         }
       }
       util.initialized = true;
