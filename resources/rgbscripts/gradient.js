@@ -30,7 +30,7 @@ var testAlgo;
     algo.acceptColors = 0;
     algo.properties = new Array();
     algo.presetIndex = 0;
-    algo.properties.push("name:presetIndex|type:list|display:Preset|values:Rainbow,Sunset,Abstract,Ocean|write:setPreset|read:getPreset");
+    algo.properties.push("name:presetIndex|type:list|display:Preset|values:Rainbow,Sunset,Abstract,Ocean,Pastels|write:setPreset|read:getPreset");
     algo.presetSize = 5;
     algo.properties.push("name:presetSize|type:range|display:Size|values:1,40|write:setSize|read:getSize");
     algo.orientation = 0;
@@ -44,6 +44,7 @@ var testAlgo;
     util.presets.push(new Array(0xFFFF00, 0xFF0000));
     util.presets.push(new Array(0x5571FF, 0x00FFFF, 0xFF00FF, 0xFFFF00));
     util.presets.push(new Array(0x003AB9, 0x02EAFF));
+    util.presets.push(new Array(0xE0BBE4, 0x957DAD, 0xD291BC, 0xFEC8D8, 0xFFDFD3));
 
     algo.setPreset = function(_preset)
     {
@@ -51,6 +52,7 @@ var testAlgo;
       else if (_preset === "Sunset") { algo.presetIndex = 1; }
       else if (_preset === "Abstract") { algo.presetIndex = 2; }
       else if (_preset === "Ocean") { algo.presetIndex = 3; }
+      else if (_preset === "Pastels") { algo.presetIndex = 4; }
       else { algo.presetIndex = 0; }
       util.initialize();
     };
@@ -61,6 +63,7 @@ var testAlgo;
       else if (algo.presetIndex === 1) { return "Sunset"; }
       else if (algo.presetIndex === 2) { return "Abstract"; }
       else if (algo.presetIndex === 3) { return "Ocean"; }
+      else if (algo.presetIndex === 4) { return "Pastels"; }
       else { return "Rainbow"; }
     };
 
