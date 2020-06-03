@@ -46,7 +46,7 @@ var testAlgo;
     util.groupStartOffset = 0;
     util.gradientData = new Array();
     util.presets = new Array();
-    util.presets.push(new Array(0XFF0000, 0XFFA500, 0XFFFF00, 0X008000, 0X0000FF, 0X4B0082, 0XEE82EE));
+    util.presets.push(new Array(0XFF0000, 0XFFFF00, 0X00FF00, 0X00FFFF, 0X0000FF, 0xFF00FF));
     util.presets.push(new Array(0xFFFF00, 0xFF0000));
     util.presets.push(new Array(0x5571FF, 0x00FFFF, 0xFF00FF, 0xFFFF00));
     util.presets.push(new Array(0x003AB9, 0x02EAFF));
