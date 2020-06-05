@@ -31,6 +31,8 @@ var testAlgo;
     algo.properties = new Array();
     algo.presetIndex = 0;
     algo.properties.push("name:presetIndex|type:list|display:Preset|values:Rainbow,Sunset,Abstract,Ocean,Pastels|write:setPreset|read:getPreset");
+    algo.startOffset = 0;
+    algo.properties.push("name:startOffset|type:range|display:Start Offset|values:0,40|write:setStartOffset|read:getStartOffset");
     algo.presetSize = 5;
     algo.properties.push("name:presetSize|type:range|display:Size|values:1,40|write:setSize|read:getSize");
     algo.orientation = 0;
@@ -78,6 +80,17 @@ var testAlgo;
     algo.getSize = function()
     {
       return algo.presetSize;
+    };
+
+    algo.setStartOffset = function(_startOffset)
+    {
+      algo.startOffset = _startOffset;
+      util.initialize();
+    };
+
+    algo.getStartOffset = function()
+    {
+      return algo.startOffset;
     };
 
     algo.setOrientation = function(_orientation)
@@ -177,6 +190,7 @@ var testAlgo;
               var ydis = y - ((height-1)/2);
               gradStep = step + Math.round( Math.sqrt((xdis * xdis) + (ydis * ydis)));
             }
+            gradStep += algo.startOffset;
             if (gradStep >= util.gradientData.length)
             {
               gradStep = (gradStep % util.gradientData.length);
