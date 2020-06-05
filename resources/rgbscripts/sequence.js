@@ -33,6 +33,8 @@ var testAlgo;
     algo.properties.push("name:presetIndex|type:list|display:Preset|values:Rainbow,Sunset,Abstract,Ocean,Pastels|write:setPreset|read:getPreset");
     algo.interpolationSteps = 0;
     algo.properties.push("name:interpolationSteps|type:range|display:Interpolation Steps|values:1,40|write:setInterpolationSteps|read:getInterpolationSteps");
+    algo.startOffset = 0;
+    algo.properties.push("name:startOffset|type:range|display:Start Offset|values:0,40|write:setStartOffset|read:getStartOffset");
     algo.orientation = 1;
     algo.properties.push("name:orientation|type:list|display:Orientation|values:Horizontal,Vertical,Radial|write:setOrientation|read:getOrientation");
     algo.numDivisions = 3;
@@ -83,6 +85,17 @@ var testAlgo;
     algo.getInterpolationSteps = function()
     {
       return algo.interpolationSteps;
+    };
+
+    algo.setStartOffset = function(_startOffset)
+    {
+      algo.startOffset = _startOffset;
+      util.initialize();
+    };
+
+    algo.getStartOffset = function()
+    {
+      return algo.startOffset;
     };
 
     algo.setOrientation = function(_orientation)
@@ -205,7 +218,7 @@ var testAlgo;
               var ydis = y - ((height-1)/2);
               groupNumber = Math.floor(Math.round( Math.sqrt((xdis * xdis) + (ydis * ydis))) / util.groupSize);
             }
-            groupStartStep = groupNumber * util.groupStartOffset;
+            groupStartStep = (groupNumber * util.groupStartOffset) + algo.startOffset;
             stepNumber = groupStartStep + step;
             if (stepNumber >= stepCount)
             {
