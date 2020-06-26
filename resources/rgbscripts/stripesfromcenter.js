@@ -30,6 +30,9 @@ var testAlgo;
 
     algo.orientation = 0;
     algo.properties = new Array();
+        
+    commonColors.CreateSourceProperty(algo);
+    
     algo.properties.push("name:orientation|type:list|display:Orientation|values:Horizontal,Vertical|write:setOrientation|read:getOrientation");
 
     algo.setOrientation = function(_orientation)
@@ -46,6 +49,8 @@ var testAlgo;
 
     algo.rgbMap = function(width, height, rgb, step)
     {
+        rgb = commonColors.GetColor(algo, width, height, rgb, step);
+        
         var center = algo.rgbMapStepCount(width, height) - 1;
         var isEven = 0;
         if (algo.orientation === 1) {

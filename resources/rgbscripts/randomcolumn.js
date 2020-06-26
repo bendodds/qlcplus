@@ -29,6 +29,8 @@ var testAlgo;
         algo.author = "David Garyga";
         algo.width = 0;
         algo.height = 0;
+        
+        commonColors.CreateSourceProperty(algo);
 
         var util = new Object;
 
@@ -77,6 +79,8 @@ var testAlgo;
 
         algo.rgbMap = function(width, height, rgb, step)
         {
+            rgb = commonColors.GetColor(algo, width, height, rgb, step);
+            
             if (algo.width !== width || algo.height !== height || parseInt(step) === 0)
             {
                 var stepList = util.createStepList(width);

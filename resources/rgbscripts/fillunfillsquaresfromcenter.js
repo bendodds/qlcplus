@@ -27,9 +27,13 @@ var testAlgo;
         algo.apiVersion = 1;
         algo.name = "Fill Unfill Squares From Center";
         algo.author = "David Garyga";
+        
+        commonColors.CreateSourceProperty(algo);
 
         algo.rgbMap = function(width, height, rgb, step)
         {
+            rgb = commonColors.GetColor(algo, width, height, rgb, step);
+            
             var widthCenter = Math.floor((parseInt(width) + 1) / 2) - 1;
             var heightCenter = Math.floor((parseInt(height) + 1) / 2) - 1;
             var isWidthEven = (width % 2 === 0);

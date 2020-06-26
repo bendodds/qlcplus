@@ -72,6 +72,9 @@ var testAlgo;
     algo.author = "Rob Nieuwenhuizen";
     // algo.acceptColors = 2;
     algo.properties = new Array();
+        
+    commonColors.CreateSourceProperty(algo);
+
     algo.presetSize = 1;
     algo.properties.push("name:presetSize|type:range|display:Size|values:1,20|write:setSize|read:getSize");
     algo.presetNumber = 5;
@@ -214,6 +217,8 @@ var testAlgo;
     };
 
     algo.rgbMap = function (width, height, rgb, progstep) {
+      palette = commonColors.GetColorPalette(algo, algo.colour);
+      
       if (algo.initialized === false) {
         util.initialize(width, height);
       }
@@ -227,7 +232,7 @@ var testAlgo;
       }
 
       for (var i = 0; i < algo.presetNumber; i++) {  // for each ball displayed
-        rgb = algo.colour[i];  // use RGB for ball random colour
+        rgb = palette[i];  // use RGB for ball random colour
         var r = (rgb >> 16) & 0x00FF;  // split colour in to
         var g = (rgb >> 8) & 0x00FF;   // separate parts
         var b = rgb & 0x00FF;

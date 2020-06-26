@@ -29,9 +29,12 @@ var testAlgo;
     algo.author = "Jano Svitok";
 
     algo.properties = new Array();
+        
+    commonColors.CreateSourceProperty(algo);
 
     algo.rgbMap = function(width, height, rgb, step)
     {
+        rgb = commonColors.GetColor(algo, width, height, rgb, step);  
         var map = new Array(height);
         for (var y = 0; y < height; y++)
         {

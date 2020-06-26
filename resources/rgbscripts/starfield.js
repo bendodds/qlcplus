@@ -27,6 +27,9 @@ var testAlgo;
         algo.name = "3D Starfield";
         algo.author = "Doug Puckett";
         algo.properties = [];
+        
+        commonColors.CreateSourceProperty(algo);
+        
         algo.acceptColors = 1;
         algo.presetColor = 0x000000;
         algo.properties.push("name:StarsAmount|type:range|display:Number of Stars (10-255)|values:10,255|write:setAmount|read:getAmount");
@@ -104,6 +107,7 @@ var testAlgo;
 
         // main QLC+ routine where the work is done
         algo.rgbMap = function (width, height, rgb, step) {
+            rgb = commonColors.GetColor(algo, width, height, rgb, step);
 
             if (algo.initialized === false) {
                 util.initialize(width, height);

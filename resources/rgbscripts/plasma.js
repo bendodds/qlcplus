@@ -29,6 +29,9 @@ var testAlgo;
     algo.author = "Tim Cullingworth";
     algo.acceptColors = 0;
     algo.properties = new Array();
+        
+    commonColors.CreateSourceProperty(algo);
+
     algo.rstepcount = 0;
     algo.gstepcount = 50;
     algo.bstepcount = 100;
@@ -184,6 +187,8 @@ var testAlgo;
 
     algo.rgbMap = function(width, height, rgb, step)
     {
+      rgb = commonColors.GetColor(algo, width, height, rgb, step);
+      
       if (util.initialized === false)
       {
         util.initialize();

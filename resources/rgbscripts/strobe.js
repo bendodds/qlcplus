@@ -28,14 +28,8 @@ var testAlgo;
       algo.author = "Rob Nieuwenhuizen";
       algo.properties = [];
       algo.acceptColors = 1;
-      algo.properties.push("name:freq|type:range|display:Frequency|values:2,10|write:setFreq|read:getFreq");
-      algo.frequency = 2;
-      algo.setFreq = function(_freq){
-        algo.frequency = parseInt(_freq);
-      };
-      algo.getFreq = function(){
-        return algo.frequency;
-      };
+        
+      commonColors.CreateSourceProperty(algo);
 
       /**
         * The actual "algorithm" for this RGB script. Produces a map of
@@ -47,15 +41,23 @@ var testAlgo;
         */
       algo.rgbMap = function (width, height, rgb, step)
       {
-        var map = new Array();
+        rgb = commonColors.GetColor(algo, width, height, rgb, step);
+        
+        var map = new Array(height);
         for (var y = 0; y < height; y++)
         {
-          var _map = new Array();
+          map[y] = [];
           for (var x = 0; x < width; x++)
           {
-            _map.push((step % algo.frequency) !== 0 ? 0 : rgb);
+            if ((step % 2) === 0)
+            {
+              map[y][x] = rgb;
+            }
+            else
+            {
+              map[y][x] = 0;
+            }
           }
-          map.push(_map);
         }
         return map;
       };
@@ -69,7 +71,7 @@ var testAlgo;
       */
       algo.rgbMapStepCount = function (width, height)
       {
-        return algo.frequency;
+        return 2;
       };
 
       // Development tool access

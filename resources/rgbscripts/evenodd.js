@@ -31,6 +31,8 @@ var testAlgo;
         algo.apiVersion = 1;
         algo.name = "Even/Odd";
         algo.author = "Heikki Junnila";
+        
+        commonColors.CreateSourceProperty(algo);
 
         /**
          * The actual "algorithm" for this RGB script. Produces a map of
@@ -42,6 +44,8 @@ var testAlgo;
          */
         algo.rgbMap = function(width, height, rgb, step)
         {
+            rgb = commonColors.GetColor(algo, width, height, rgb, step);
+
             var map = new Array(height);
             var i = step;
             for (var y = 0; y < height; y++)

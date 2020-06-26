@@ -32,6 +32,8 @@ var testAlgo;
     algo.rstepcount = 0;
     algo.gstepcount = 50;
     algo.bstepcount = 100;
+    
+    commonColors.CreateSourceProperty(algo);
 
     algo.presetSize = 1;
     algo.properties.push("name:presetSize|type:range|display:Size|values:1,20|write:setSize|read:getSize");
@@ -118,6 +120,8 @@ var testAlgo;
 
     algo.rgbMap = function(width, height, rgb, progstep)
     {
+      rgb = commonColors.GetColor(algo, width, height, rgb, progstep);
+
       if (algo.initialized === false)
       {
         util.initialize(width, height);

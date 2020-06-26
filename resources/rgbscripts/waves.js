@@ -28,6 +28,9 @@ function()
     algo.author = "Nathan Durnan";
 
     algo.properties = new Array();
+        
+    commonColors.CreateSourceProperty(algo);
+
     algo.taillength = 50;
     algo.properties.push("name:taillength|type:range|display:Tail Length %|values:0,100|write:setTail|read:getTail");
     algo.tailfade = 1;
@@ -108,6 +111,8 @@ function()
 
     algo.rgbMap = function(width, height, rgb, step)
     {
+      rgb = commonColors.GetColor(algo, width, height, rgb, step);
+
       if (util.initialized === false) { util.initialize(); }
       var span = ((algo.orientation === 0) ? width : height);
       var center = Math.floor((span + 1) / 2) - 1;

@@ -29,6 +29,9 @@ var testAlgo;
         algo.author = "David Garyga";
         algo.acceptColors = 2;
         algo.properties = new Array();
+        
+        commonColors.CreateSourceProperty(algo);
+        
         algo.fillSquares = 0;
         algo.properties.push("name:fillSquares|type:list|display:Fill squares|values:No,Yes|write:setFill|read:getFill");
 
@@ -46,6 +49,8 @@ var testAlgo;
 
         algo.rgbMap = function(width, height, rgb, step)
         {
+            rgb = commonColors.GetColor(algo, width, height, rgb, step);
+            
             var widthCenter = Math.floor((parseInt(width) + 1) / 2) - 1;
             var heightCenter = Math.floor((parseInt(height) + 1) / 2) - 1;
             var isWidthEven = (width % 2 === 0);

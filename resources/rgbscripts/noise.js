@@ -28,6 +28,9 @@ var testAlgo;
         algo.name = "Noise";
         algo.author = "Doug Puckett";
         algo.properties = [];
+        
+        commonColors.CreateSourceProperty(algo);
+        
         algo.acceptColors = 1;
         algo.noisePercentage = "High";
         var dCounter = 0;
@@ -45,6 +48,7 @@ var testAlgo;
         // QLC+ rgbMap function where the work is done
         algo.rgbMap = function (width, height, rgb, step)
         {
+            rgb = commonColors.GetColor(algo, width, height, rgb, step);      
             var map = new Array(height);
 
             for (var y = 0; y < height; y++)

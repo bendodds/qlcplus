@@ -29,6 +29,9 @@ var testAlgo;
     algo.author = "Massimo Callegari";
     algo.acceptColors = 0;
     algo.properties = new Array();
+        
+    commonColors.CreateSourceProperty(algo);
+
     algo.presetIndex = 0;
     algo.properties.push("name:presetIndex|type:list|display:Preset|values:Rainbow,Sunset,Abstract,Ocean,Pastels|write:setPreset|read:getPreset");
     algo.startOffset = 0;
@@ -41,7 +44,7 @@ var testAlgo;
     algo.properties.push("name:interpolationMode|type:list|display:Interpolation Mode|values:Interpolate,No Interpolate|write:setInterpolationMode|read:getInterpolationMode");
 
     var util = new Object;
-    util.initialized = false;
+    util.lastPalette = null;
     util.gradientData = new Array();
     util.presets = new Array();
     util.presets.push(new Array(0XFF0000, 0XFFFF00, 0X00FF00, 0X00FFFF, 0X0000FF, 0xFF00FF));
@@ -58,7 +61,6 @@ var testAlgo;
       else if (_preset === "Ocean") { algo.presetIndex = 3; }
       else if (_preset === "Pastels") { algo.presetIndex = 4; }
       else { algo.presetIndex = 0; }
-      util.initialize();
     };
 
     algo.getPreset = function()
@@ -74,7 +76,6 @@ var testAlgo;
     algo.setSize = function(_size)
     {
       algo.presetSize = _size;
-      util.initialize();
     };
 
     algo.getSize = function()
@@ -85,7 +86,6 @@ var testAlgo;
     algo.setStartOffset = function(_startOffset)
     {
       algo.startOffset = _startOffset;
-      util.initialize();
     };
 
     algo.getStartOffset = function()
@@ -98,7 +98,6 @@ var testAlgo;
       if (_orientation === "Vertical") { algo.orientation = 1; }
       else if (_orientation === "Radial") { algo.orientation = 2; }
       else { algo.orientation = 0; }
-      util.initialize();
     };
 
     algo.getOrientation = function()
@@ -112,7 +111,6 @@ var testAlgo;
     {
       if (_interpolationMode === "No Interpolate") { algo.interpolationMode = 1; }
       else { algo.interpolationMode = 0; }
-      util.initialize();
     };
 
     algo.getInterpolationMode = function()
@@ -121,18 +119,18 @@ var testAlgo;
       else { return "Interpolate"; }
     };
 
-    util.initialize = function()
+    util.getGradientFromPalette = function(palette)
     {
       // calculate the gradient for the selected preset
       // with the given width
       var gradIdx = 0;
       util.gradientData = new Array();
-      for (var i = 0; i < util.presets[algo.presetIndex].length; i++)
+      for (var i = 0; i < palette.length; i++)
       {
-        var sColor = util.presets[algo.presetIndex][i];
-        var eColor = util.presets[algo.presetIndex][i + 1];
+        var sColor = palette[i];
+        var eColor = palette[i + 1];
         if (eColor == undefined) {
-          eColor = util.presets[algo.presetIndex][0];
+          eColor = palette[0];
         }
         util.gradientData[gradIdx++] = sColor;
         var sr = (sColor >> 16) & 0x00FF;
@@ -159,14 +157,14 @@ var testAlgo;
           }
         }
       }
-      util.initialized = true;
     };
 
     algo.rgbMap = function(width, height, rgb, step)
     {
-      if (util.initialized === false)
-      {
-        util.initialize(width);
+      palette = commonColors.GetColorPalette(algo, util.presets[algo.presetIndex]);
+      if (!commonColors.ArraysEqual(palette, util.lastPalette)) {
+        util.getGradientFromPalette(palette);
+        util.lastPalette = palette;
       }
 
       var gradStep = 0;
@@ -205,9 +203,12 @@ var testAlgo;
 
     algo.rgbMapStepCount = function(width, height)
     {
-      if (util.initialized === false) {
-        util.initialize();
+      palette = commonColors.GetColorPalette(algo, util.presets[algo.presetIndex]);
+      if (!commonColors.ArraysEqual(palette, util.lastPalette)) {
+        util.getGradientFromPalette(palette);
+        util.lastPalette = palette;
       }
+
       return util.gradientData.length;
     };
 

@@ -28,6 +28,8 @@ var testAlgo;
         algo.author = "Doug Puckett";
         algo.properties = [];
         algo.acceptColors = 1;
+        
+        commonColors.CreateSourceProperty(algo);
 
         /**
           * The actual "algorithm" for this RGB script. Produces a map of
@@ -38,6 +40,8 @@ var testAlgo;
           * @return A two-dimensional array[height][width].
           */
         algo.rgbMap = function (width, height, rgb, step) {
+            rgb = commonColors.GetColor(algo, width, height, rgb, step);
+            
             var map = new Array(height);
             for (var y = 0; y < height; y++) {
                 map[y] = [];

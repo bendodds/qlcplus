@@ -28,7 +28,9 @@ var testAlgo;
         algo.author = "Doug Puckett";
         algo.properties = [];
         algo.acceptColors = 0;
-
+        
+        commonColors.CreateSourceProperty(algo);
+        
         /**
           * The actual "algorithm" for this RGB script. Produces a map of
           * size($width, $height) each time it is called.

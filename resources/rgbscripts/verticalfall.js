@@ -28,6 +28,8 @@ var testAlgo;
         algo.name = "Vertical fall";
         algo.author = "Massimo Callegari";
         algo.acceptColors = 1;
+        
+        commonColors.CreateSourceProperty(algo);
 
         var util = new Object;
         util.initialized = false;
@@ -113,6 +115,8 @@ var testAlgo;
 
         algo.rgbMap = function(width, height, rgb, step)
         {
+            rgb = commonColors.GetColor(algo, width, height, rgb, step);
+
             if (util.initialized === false || util.color !== rgb) {
                 util.initialize(rgb, width, height);
             }

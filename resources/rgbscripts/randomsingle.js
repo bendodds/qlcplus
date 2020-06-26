@@ -34,6 +34,8 @@ var testAlgo;
         algo.author = "David Garyga";
         algo.width = 0;
         algo.height = 0;
+        
+        commonColors.CreateSourceProperty(algo);
 
         var util = new Object;
         /**
@@ -111,6 +113,8 @@ var testAlgo;
          */
         algo.rgbMap = function(width, height, rgb, step)
         {
+            rgb = commonColors.GetColor(algo, width, height, rgb, step);
+            
             // Create a new step list only when attributes change to keep the
             // script running with as little extra overhead as possible.
             // Create a new step list each new iteration of the loop so it does not look repetitive

@@ -29,6 +29,9 @@ var testAlgo;
     algo.author = "Ben Dodds";
     algo.acceptColors = 0;
     algo.properties = new Array();
+        
+    commonColors.CreateSourceProperty(algo);
+
     algo.bandSize = 5;
     algo.properties.push("name:bandSize|type:range|display:Size|values:1,40|write:setBandSize|read:getBandSize");
     algo.orientation = 0;
@@ -488,6 +491,8 @@ var testAlgo;
 
     algo.rgbMap = function(width, height, rgb, step)
     {
+      rgb = commonColors.GetColor(algo, width, height, rgb, step);
+      
       if (util.initialized === false)
       {
         util.initialize(width);

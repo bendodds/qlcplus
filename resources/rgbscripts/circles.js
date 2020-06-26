@@ -29,6 +29,9 @@ var testAlgo;
     algo.author = "Massimo Callegari";
     algo.acceptColors = 2;
     algo.properties = new Array();
+        
+    commonColors.CreateSourceProperty(algo);
+
     algo.circlesAmount = 3;
     algo.properties.push("name:circlesAmount|type:range|display:Amount|values:1,10|write:setAmount|read:getAmount");
     algo.fadeMode = 0;
@@ -186,6 +189,8 @@ var testAlgo;
 
     algo.rgbMap = function(width, height, rgb, step)
     {
+      rgb = commonColors.GetColor(algo, width, height, rgb, step);
+      
       if (util.initialized === false)
       {
         if (height < width) {

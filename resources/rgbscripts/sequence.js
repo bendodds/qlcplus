@@ -225,7 +225,9 @@ var testAlgo;
               stepNumber = (stepNumber % stepCount);
             }
 
-            map[y][x] = util.gradientData[stepNumber];
+            // map[y][x] = util.gradientData[stepNumber];
+            map[y][x] = commonColors.primary;
+            // map[y][x] = (200 * (new Date().getTime() / 1000) % 255);
           }
       }
 
