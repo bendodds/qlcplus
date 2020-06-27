@@ -37,7 +37,7 @@ var testAlgo;
     algo.startOffset = 0;
     algo.properties.push("name:startOffset|type:range|display:Start Offset|values:0,40|write:setStartOffset|read:getStartOffset");
     algo.presetSize = 5;
-    algo.properties.push("name:presetSize|type:range|display:Size|values:1,40|write:setSize|read:getSize");
+    algo.properties.push("name:presetSize|type:range|display:Size|values:1,200|write:setSize|read:getSize");
     algo.orientation = 0;
     algo.properties.push("name:orientation|type:list|display:Orientation|values:Horizontal,Vertical,Radial|write:setOrientation|read:getOrientation");
     algo.interpolationMode = 0;
@@ -161,7 +161,8 @@ var testAlgo;
 
     algo.rgbMap = function(width, height, rgb, step)
     {
-      palette = commonColors.GetColorPalette(algo, util.presets[algo.presetIndex]);
+      var palette = commonColors.GetColorPalette(algo, 
+          util.presets[algo.presetIndex]);
       if (!commonColors.ArraysEqual(palette, util.lastPalette)) {
         util.getGradientFromPalette(palette);
         util.lastPalette = palette;
@@ -203,13 +204,7 @@ var testAlgo;
 
     algo.rgbMapStepCount = function(width, height)
     {
-      palette = commonColors.GetColorPalette(algo, util.presets[algo.presetIndex]);
-      if (!commonColors.ArraysEqual(palette, util.lastPalette)) {
-        util.getGradientFromPalette(palette);
-        util.lastPalette = palette;
-      }
-
-      return util.gradientData.length;
+      return 200;
     };
 
     // Development tool access

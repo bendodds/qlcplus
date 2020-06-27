@@ -119,9 +119,9 @@ catch(err) {
 
     return 0;
   };
-  commonColors.GetColorPalette = function(algo, width, height, rgb, step) {
+  commonColors.GetColorPalette = function(algo, defaultPalette) {
     if (algo.colorSource === "Default") {
-      return [rgb];
+      return defaultPalette;
     }
 
     if (algo.colorSource === "Primary - Single"

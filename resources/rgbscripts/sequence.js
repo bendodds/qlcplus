@@ -29,6 +29,9 @@ var testAlgo;
     algo.author = "Ben Dodds";
     algo.acceptColors = 0;
     algo.properties = new Array();
+        
+    commonColors.CreateSourceProperty(algo);
+
     algo.presetIndex = 0;
     algo.properties.push("name:presetIndex|type:list|display:Preset|values:Rainbow,Sunset,Abstract,Ocean,Pastels|write:setPreset|read:getPreset");
     algo.interpolationSteps = 0;
@@ -41,12 +44,12 @@ var testAlgo;
     algo.properties.push("name:numDivisions|type:range|display:Number of Divisions|values:1,40|write:setNumDivisions|read:getNumDivisions");
 
     var util = new Object;
-    util.initialized = false;
     util.previouseWidth = null;
     util.previousHeight = null;
     util.groupSize = 0;
     util.groupStartOffset = 0;
     util.gradientData = new Array();
+    util.lastPalette = null;
     util.presets = new Array();
     util.presets.push(new Array(0XFF0000, 0XFFFF00, 0X00FF00, 0X00FFFF, 0X0000FF, 0xFF00FF));
     util.presets.push(new Array(0xFFFF00, 0xFF0000));
@@ -62,8 +65,6 @@ var testAlgo;
       else if (_preset === "Ocean") { algo.presetIndex = 3; }
       else if (_preset === "Pastels") { algo.presetIndex = 4; }
       else { algo.presetIndex = 0; }
-
-      util.initialized = false;
     };
 
     algo.getPreset = function()
@@ -79,7 +80,6 @@ var testAlgo;
     algo.setInterpolationSteps = function(_interpolationSteps)
     {
       algo.interpolationSteps = _interpolationSteps;
-      util.initialized = false;
     };
 
     algo.getInterpolationSteps = function()
@@ -90,7 +90,6 @@ var testAlgo;
     algo.setStartOffset = function(_startOffset)
     {
       algo.startOffset = _startOffset;
-      util.initialize();
     };
 
     algo.getStartOffset = function()
@@ -103,8 +102,6 @@ var testAlgo;
       if (_orientation === "Vertical") { algo.orientation = 1; }
       else if (_orientation === "Radial") { algo.orientation = 2; }
       else { algo.orientation = 0; }
-
-      util.initialized = false;
     };
 
     algo.getOrientation = function()
@@ -117,7 +114,6 @@ var testAlgo;
     algo.setNumDivisions = function(_numDivisions)
     {
       algo.numDivisions = _numDivisions;
-      util.initialized = false;
     };
 
     algo.getNumDivisions = function()
@@ -125,30 +121,18 @@ var testAlgo;
       return algo.numDivisions;
     };
 
-    util.initialize = function(width, height)
+    util.getGradientFromPalette = function(palette, width, height)
     {
-      if (width !== util.previouseWidth || height !== util.previousHeight)
-      {
-        util.initialized = false;
-        util.previouseWidth = width;
-        util.previouseHeight = height;
-      }
-
-      if (util.initialized === true)
-      {
-        return;
-      }
-
       // calculate the gradient for the selected preset
       // with the given width
       var gradIdx = 0;
       util.gradientData = new Array();
-      for (var i = 0; i < util.presets[algo.presetIndex].length; i++)
+      for (var i = 0; i < palette.length; i++)
       {
-        var sColor = util.presets[algo.presetIndex][i];
-        var eColor = util.presets[algo.presetIndex][i + 1];
+        var sColor = palette[i];
+        var eColor = palette[i + 1];
         if (eColor == undefined) {
-          eColor = util.presets[algo.presetIndex][0];
+          eColor = palette[0];
         }
         util.gradientData[gradIdx++] = sColor;
         var sr = (sColor >> 16) & 0x00FF;
@@ -185,13 +169,16 @@ var testAlgo;
         util.groupSize = Math.round(Math.max(width, height) / algo.numDivisions);
       }
       util.groupStartOffset = Math.ceil(util.gradientData.length / algo.numDivisions);
-
-      util.initialized = true;
     };
 
     algo.rgbMap = function(width, height, rgb, step)
     {
-      util.initialize(width, height);
+      var palette = commonColors.GetColorPalette(algo, 
+          util.presets[algo.presetIndex]);
+      if (!commonColors.ArraysEqual(palette, util.lastPalette)) {
+        util.getGradientFromPalette(palette, width, height);
+        util.lastPalette = palette;
+      }
 
       var groupNumber = 0;
       var groupStartStep = 0;
@@ -220,14 +207,8 @@ var testAlgo;
             }
             groupStartStep = (groupNumber * util.groupStartOffset) + algo.startOffset;
             stepNumber = groupStartStep + step;
-            if (stepNumber >= stepCount)
-            {
-              stepNumber = (stepNumber % stepCount);
-            }
 
-            // map[y][x] = util.gradientData[stepNumber];
-            map[y][x] = commonColors.primary;
-            // map[y][x] = (200 * (new Date().getTime() / 1000) % 255);
+            map[y][x] = util.gradientData[stepNumber % stepCount];
           }
       }
 
@@ -236,9 +217,7 @@ var testAlgo;
 
     algo.rgbMapStepCount = function(width, height)
     {
-      util.initialize(width, height);
-      
-      return util.gradientData.length;
+      return 200;
     };
 
     // Development tool access

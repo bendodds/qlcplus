@@ -69,7 +69,6 @@ var testAlgo;
     algo.setColor1R = function(_color)
     {
       algo.color1R = _color;
-      util.initialize();
     };
     algo.getColor1R = function()
     {
@@ -79,7 +78,6 @@ var testAlgo;
     algo.setColor1G = function(_color)
     {
       algo.color1G = _color;
-      util.initialize();
     };
     algo.getColor1G = function()
     {
@@ -89,7 +87,6 @@ var testAlgo;
     algo.setColor1B = function(_color)
     {
       algo.color1B = _color;
-      util.initialize();
     };
     algo.getColor1B = function()
     {
@@ -99,7 +96,6 @@ var testAlgo;
     algo.setColor2R = function(_color)
     {
       algo.color2R = _color;
-      util.initialize();
     };
     algo.getColor2R = function()
     {
@@ -109,7 +105,6 @@ var testAlgo;
     algo.setColor2G = function(_color)
     {
       algo.color2G = _color;
-      util.initialize();
     };
     algo.getColor2G = function()
     {
@@ -119,7 +114,6 @@ var testAlgo;
     algo.setColor2B = function(_color)
     {
       algo.color2B = _color;
-      util.initialize();
     };
     algo.getColor2B = function()
     {
@@ -129,7 +123,6 @@ var testAlgo;
     algo.setColor3R = function(_color)
     {
       algo.color3R = _color;
-      util.initialize();
     };
     algo.getColor3R = function()
     {
@@ -139,7 +132,6 @@ var testAlgo;
     algo.setColor3G = function(_color)
     {
       algo.color3G = _color;
-      util.initialize();
     };
     algo.getColor3G = function()
     {
@@ -149,7 +141,6 @@ var testAlgo;
     algo.setColor3B = function(_color)
     {
       algo.color3B = _color;
-      util.initialize();
     };
     algo.getColor3B = function()
     {
@@ -159,7 +150,6 @@ var testAlgo;
     algo.setColor4R = function(_color)
     {
       algo.color4R = _color;
-      util.initialize();
     };
     algo.getColor4R = function()
     {
@@ -169,7 +159,6 @@ var testAlgo;
     algo.setColor4G = function(_color)
     {
       algo.color4G = _color;
-      util.initialize();
     };
     algo.getColor4G = function()
     {
@@ -179,7 +168,6 @@ var testAlgo;
     algo.setColor4B = function(_color)
     {
       algo.color4B = _color;
-      util.initialize();
     };
     algo.getColor4B = function()
     {
@@ -189,7 +177,6 @@ var testAlgo;
     algo.setColor5R = function(_color)
     {
       algo.color5R = _color;
-      util.initialize();
     };
     algo.getColor5R = function()
     {
@@ -199,7 +186,6 @@ var testAlgo;
     algo.setColor5G = function(_color)
     {
       algo.color5G = _color;
-      util.initialize();
     };
     algo.getColor5G = function()
     {
@@ -209,7 +195,6 @@ var testAlgo;
     algo.setColor5B = function(_color)
     {
       algo.color5B = _color;
-      util.initialize();
     };
     algo.getColor5B = function()
     {
@@ -219,7 +204,6 @@ var testAlgo;
     algo.setColor6R = function(_color)
     {
       algo.color6R = _color;
-      util.initialize();
     };
     algo.getColor6R = function()
     {
@@ -229,7 +213,6 @@ var testAlgo;
     algo.setColor6G = function(_color)
     {
       algo.color6G = _color;
-      util.initialize();
     };
     algo.getColor6G = function()
     {
@@ -239,7 +222,6 @@ var testAlgo;
     algo.setColor6B = function(_color)
     {
       algo.color6B = _color;
-      util.initialize();
     };
     algo.getColor6B = function()
     {
